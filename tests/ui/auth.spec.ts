@@ -23,6 +23,8 @@ test.describe('Authentication UI tests', () => {
         await loginPage.login('testuser01', 'Test@12345');
 
         await expect(page).toHaveURL(/profile/);
+        await expect(loginPage.logoutButton).toBeVisible();
+        await expect(page.getByText('TestUser01')).toBeVisible();
     });
 
     test('TC-05 Login with invalid user', async ({ page }) => {
@@ -36,13 +38,11 @@ test.describe('Authentication UI tests', () => {
 
     test('TC-06 Logout', async ({ page }) => {
         const loginPage = new LoginPage(page);
-
         await loginPage.goto();
         await loginPage.login('testuser01', 'Test@12345');
-
         await expect(page).toHaveURL(/profile/);
 
-        await page.getByRole('button', { name: 'Log out' }).click();
+        await loginPage.logoutButton.click();
 
         await expect(page).toHaveURL(/login/);
     });

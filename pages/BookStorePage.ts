@@ -9,10 +9,10 @@ export class BookStorePage {
 
     constructor(page:Page) {
         this.page = page;
-        this.searchBox = page.locator('#searchBox');
+        this.searchBox = page.getByRole('textbox', { name: 'Type to search' });
         this.booksTable = page.locator('.rt-table');
-        this.paginationNext = page.locator('button:-has-text("Next")');
-        this.pageSizeSelect = page.locator('select[aria-label="rows per page"]');
+        this.paginationNext = page.getByRole('button', { name: 'Next' });
+        this.pageSizeSelect = page.getByLabel('rows per page');
     }
 
     async goto() {

@@ -5,12 +5,14 @@ export class ProfilePage {
     readonly deleteAllButton: Locator;
     readonly deleteButtons: Locator;
     readonly booksTable: Locator;
+    readonly notLoggedMessage: Locator
 
     constructor(page:Page) {
         this.page = page;
-        this.deleteAllButton = page.locator('button:text("Delete All Books")');
+        this.deleteAllButton = page.getByRole('button', { name: 'Delete All Books' });
         this.deleteButtons = page.locator('button:text("Delete")');
         this.booksTable = page.locator('.rt-table');
+        this.notLoggedMessage = page.getByText('Currently you are not logged');
     }
 
     async goto() {
