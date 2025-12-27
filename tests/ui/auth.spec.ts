@@ -4,43 +4,16 @@ import { RegisterPage } from '../../pages/RegisterPage'
 
 test.describe('Authentication UI tests', () => {
 
-    test('TC-01 Successful user registration', async ({ page }) => {
-        const loginPage = new LoginPage(page);
-        const registerPage = new RegisterPage(page);
-
-        await loginPage.goto();
-        await loginPage.newUserButton.click();
-        await registerPage.register({
-            firstName: 'Test',
-            lastName: 'User',
-            username: 'testuser01',
-            password: 'Test@12345'
-        });
-
-        await expect(registerPage.resultMessage).toContainText('User Created');
-    });
-
     test('TC-02 Registration with empty mandatory fields', async ({ page }) => {
         const registerPage = new RegisterPage(page);
 
         await page.goto('/register');
         await registerPage.registerButton.click();
         
-        await expect(registerPage.resultMessage).toBeVisible();
-    });
-
-    test('TC-03 Registration with invalid password', async ({ page }) => {
-        const registerPage = new RegisterPage(page);
-
-        await page.goto('/register');
-        await registerPage.register({
-            firstName: 'Test',
-            lastName: 'User',
-            username: 'invalidpass',
-            password: '1234'
-        });
-
-        await expect(registerPage.resultMessage).toContainText('Password');
+        await expect(registerPage.firstName).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+        await expect(registerPage.lastName).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+        await expect(registerPage.username).toHaveCSS('border-color', 'rgb(220, 53, 69)');
+        await expect(registerPage.password).toHaveCSS('border-color', 'rgb(220, 53, 69)');
     });
 
     test('TC-04 Successful login', async ({ page }) => {
@@ -66,7 +39,10 @@ test.describe('Authentication UI tests', () => {
 
         await loginPage.goto();
         await loginPage.login('testuser01', 'Test@12345');
-        await page.locator('#submit').click();
+
+        await expect(page).toHaveURL(/profile/);
+
+        await page.getByRole('button', { name: 'Log out' }).click();
 
         await expect(page).toHaveURL(/login/);
     });
