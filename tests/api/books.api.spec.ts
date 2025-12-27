@@ -13,9 +13,40 @@ test.describe('Books API tests', () => {
         expect(body.books.lenght).toBeGreaterThan(0);
     });
 
+    test('TC-29 Add book to user', async ({ request }) => {
+        const response = await request.post('/BookStore/v1/Books');
+
+        expect([200, 201]).toContain(response.status());
+    });
+
+    test('TC-30 Delete book', async ({ request }) => {
+        const response = await request.delete('/BookStore/v1/Books');
+
+        expect(response.status()).toBe(204);
+    });
+
     test('TC-31 Request without token', async ({ request }) => {
         const response = await request.post('/BookStore/v1/Books');
 
+        expect(response.status()).toBe(401);
+    });
+
+    test('TC-38 Add multiple books', async ({ request }) => {
+        const response = await request.post('/BookStore/v1/Books');
+
+        expect(response.status()).toBe(201);
+    });
+
+    test('TC-39 Add duplicated book', async ({ request }) => {
+        const response = await request.post('/BookStore/v1/Books');
+
+        expect(response.status()).toBe(400);
+    });
+
+    test('TC-41 Invalid token', async ({ request }) => {
+        const response = await request.post('/BookStore/v1/Books', {
+            headers: { Authorization: 'Bearer invalid' }
+        });
         expect(response.status()).toBe(401);
     });
 

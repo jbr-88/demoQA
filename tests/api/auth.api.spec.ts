@@ -20,4 +20,27 @@ test.describe('Auth API tests', () => {
 
         expect(response.status()).toBe(400);
     });
+
+    test('TC-32 Create user via API', async ({ request }) => {
+        const authApi = new AuthApi(request);
+
+        const response = await authApi.createUser('apiuser01', 'Api@12345');
+
+        expect(response.status()).toBe(201);
+    });
+
+    test('TC-33 Create duplicated user', async ({ request }) => {
+        const authApi = new AuthApi(request);
+
+        const response = await authApi.createUser('apiuser01', 'Api@12345');
+
+        expect(response.status()).toBe(406);
+    });
+
+    test('TC-43 Invalid JSON format', async ({ request }) => {
+        const response = await request.post('/Account/v1/Login', {
+            data: '{ invalid json'
+        });
+        expect(response.status()).toBe(400);
+    });
 });
