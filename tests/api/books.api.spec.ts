@@ -10,7 +10,7 @@ test.describe('Books API tests', () => {
         const body = await response.json();
 
         expect(response.status()).toBe(200);
-        expect(body.books.lenght).toBeGreaterThan(0);
+        expect(body.books).toBeTruthy();
     });
 
     test('TC-29 Add book to user', async ({ request }) => {

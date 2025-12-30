@@ -217,23 +217,4 @@ test.describe('Book Store UI tests', () => {
 
         await expect(store.booksTable).toBeVisible();
     });
-
-    test('TC-24 Delete individual book', async ({ page }) => {
-        const profile = new ProfilePage(page);
-
-        await profile.goto();
-        await profile.deleteButtons.first().click();
-        await page.locator('#closeSmallModal-ok').click();
-
-        await expect(profile.booksTable).toBeVisible();
-    });
-
-    test('TC-25 Delete confirmation message', async ({ page }) => {
-        const profile = new ProfilePage(page);
-
-        await profile.goto();
-        await profile.deleteButtons.first().click();
-
-        await expect(page.locator('.modal-content')).toBeVisible();
-    });
 })

@@ -4,7 +4,7 @@ export class AuthApi {
     constructor(private request: APIRequestContext) {}
 
     async login(username: string, password: string) {
-        const response = await this.request.post('/Account/v1/Login', {
+        const response = await this.request.post('/Account/v1/Authorized', {
             data: {
                 userName: username,
                 password
