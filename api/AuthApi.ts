@@ -21,4 +21,13 @@ export class AuthApi {
             }
         });
     }
+
+    async generateToken(username: string, password: string) {
+        return await this.request.post('/Account/v1/GenerateToken', {
+            data: {
+                userName: username,
+                password
+            }
+        });
+    }
 }

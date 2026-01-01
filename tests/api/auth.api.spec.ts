@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test'
 import { AuthApi } from '../../api/AuthApi'
-import { saveUserId } from '../../utils/testContext';
 
 test.describe('Auth API tests', () => {
 
@@ -25,14 +24,12 @@ test.describe('Auth API tests', () => {
     test('TC-32 Create user via API', async ({ request }) => {
         const authApi = new AuthApi(request);
 
-        const response = await authApi.createUser('apiuser01', 'Api@12345');
+        const response = await authApi.createUser('apiuser09', 'Api@12345');
         const body = await response.json();
 
         expect(response.status()).toBe(201);
         expect(body).toHaveProperty('userID');
         expect(body.userID).toBeTruthy();
-
-        saveUserId(body.userID);
     });
 
     test('TC-33 Create duplicated user', async ({ request }) => {
