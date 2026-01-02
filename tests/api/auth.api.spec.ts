@@ -3,7 +3,7 @@ import { AuthApi } from '../../api/AuthApi'
 
 test.describe('Auth API tests', () => {
 
-    test('TC-26 Successful login via API', async ({ request }) => {
+    test('TC-24 Successful login via API', async ({ request }) => {
         const authApi = new AuthApi(request);
 
         const response = await authApi.login('testuser01', 'Test@12345');
@@ -11,7 +11,7 @@ test.describe('Auth API tests', () => {
         expect(response.status()).toBe(200);
     });
 
-    test('TC-27 Login with invalid credentials', async ({ request }) => {
+    test('TC-25 Login with invalid credentials', async ({ request }) => {
         const authApi = new AuthApi(request);
 
         const response = await authApi.login('testuser01', 'fakepass');
@@ -21,18 +21,19 @@ test.describe('Auth API tests', () => {
         expect(body.message).toContain('User not found!');
     });
 
-    test('TC-32 Create user via API', async ({ request }) => {
+    test('TC-30 Create user via API', async ({ request }) => {
         const authApi = new AuthApi(request);
 
-        const response = await authApi.createUser('apiuser09', 'Api@12345');
+        const response = await authApi.createUser('apiuser14', 'Api@12345');
         const body = await response.json();
+        console.log(body);
 
         expect(response.status()).toBe(201);
         expect(body).toHaveProperty('userID');
         expect(body.userID).toBeTruthy();
     });
 
-    test('TC-33 Create duplicated user', async ({ request }) => {
+    test('TC-31 Create duplicated user', async ({ request }) => {
         const authApi = new AuthApi(request);
 
         const response = await authApi.createUser('testuser01', 'Test@12345');

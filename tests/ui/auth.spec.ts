@@ -8,7 +8,7 @@ test.describe('Authentication UI tests', () => {
         const registerPage = new RegisterPage(page);
 
         await page.goto('/register');
-        await registerPage.registerButton.click();
+        await registerPage.registerButton.click({ timeout: 10000});
         
         await expect(registerPage.firstName).toHaveCSS('border-color', 'rgb(220, 53, 69)');
         await expect(registerPage.lastName).toHaveCSS('border-color', 'rgb(220, 53, 69)');
